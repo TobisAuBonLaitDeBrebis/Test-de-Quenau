@@ -5,7 +5,7 @@ a. texte brut,
 B. texte sans EN 
 c. texte avec uniquement noms, adv, adj, verbes 
 d. texte avec uniquement noms, adv, adj, verbes Lemmatisés 
-2. Pour chaque texte, générer extractions des Mots clés avec Tropical rank et la librairie (Pke) ?
+2. Pour chaque texte, générer extractions des Mots clés avec le modéle Tropical rank par le bia de la librairie PKE 
 
 Le résultat et stocker dans le CSV keyword_queneau_fr.csv qui se situe dans le fichier /data 
 Le Jupyter MateBook analyse_keyword_queneau_fr   est une analyse rapide de ce résultat 
