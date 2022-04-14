@@ -38,7 +38,7 @@ print(time.strftime("%H:%M:%S", time.localtime()), end=' : ')
 print('processus started')
 
 #Test sur l'ensemblde des textes
-df = pd.read_csv("data/queneaud_fr.csv")
+df = pd.read_csv("data/queneau_fr.csv")
 nlp = spacy.load("fr_core_news_md")  # chargement du modéle dans Spacy
 nlp.Defaults.stop_words |= STOP_WORDS
 
@@ -52,7 +52,7 @@ print(result.head())
 """
 df_keywords = df["texte"].apply(ke.protocole_extract_with_Pke,nlp=nlp,extractor=extractor)
 df_result = pd.concat([df, df_keywords], axis=1, join='inner')
-df_result.to_csv('data/keyword_queneaud_fr.csv', index = False)
+df_result.to_csv('data/keyword_queneau_fr.csv', index = False)
 print(df_result.head())
 
 print(time.strftime("%H:%M:%S", time.localtime()), end=' : ')
