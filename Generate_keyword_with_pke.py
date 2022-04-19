@@ -37,18 +37,29 @@ print(len(test))
 print(time.strftime("%H:%M:%S", time.localtime()), end=' : ')
 print('processus started')
 
-#Test sur l'ensemblde des textes
-df = pd.read_csv("data/queneau_fr.csv")
-nlp = spacy.load("fr_core_news_md")  # chargement du modéle dans Spacy
-nlp.Defaults.stop_words |= STOP_WORDS
+df = pd.read_csv("data/text_protocol_queneau_fr.csv")
+extractor = pke.unsupervised.TopicalPageRank()
 
-extractor = pke.unsupervised.TopicalPageRank() #chargement du modéle topicalRank
+for key in df.keys():
+    if key not in("title "):
+        print(key)
+        df[key+"_keyword"] = df[key].apply(ke.extract_key_words,extractor=extractor)
+
+print(df.head())
+df.to_csv('data/Keyword_with_PKE_queneau_fr.csv', index = False)
+print(time.strftime("%H:%M:%S", time.localtime()), end=' : ')
+
+print('processus finished')
+
+
 """
 df_test =df[0:1]
 #df_test["keywords_text"], df_test["keywords_without_ent"], df_test["keywords_only_VERB_ADJ_ADV_PROPN"], df_test["keywords_only_VERBLemma_ADJ_ADV_PROPN"]=
 func_test= df_test["texte"].apply(ke.protocole_extract_with_Pke,nlp=nlp,extractor=extractor)
 result = pd.concat([df_test, func_test], axis=1, join='inner')
 print(result.head())
+"""
+
 """
 df_keywords = df["texte"].apply(ke.protocole_extract_with_Pke,nlp=nlp,extractor=extractor)
 df_result = pd.concat([df, df_keywords], axis=1, join='inner')
@@ -57,4 +68,5 @@ print(df_result.head())
 
 print(time.strftime("%H:%M:%S", time.localtime()), end=' : ')
 print('processus finished')
+"""
 

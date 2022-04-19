@@ -9,15 +9,18 @@ import pandas as pd
 
 
 def extract_key_words(text ,extractor): #Déclartion d'une fonction permettant de dextraire les entitér en fonction d'un text
+    try:
+        extractor.load_document(input=text, language='fr', normalization="stemming")
+        extractor.candidate_selection()
+        extractor.candidate_weighting()
+        keyphrases = extractor.get_n_best(n=10)
+        list_keyword =list()
+        for key_word in keyphrases:
+            list_keyword.append(key_word[0])
+        return " ".join(list_keyword)
 
-    extractor.load_document(input=text, language='fr', normalization="stemming")
-    extractor.candidate_selection()
-    extractor.candidate_weighting()
-    keyphrases = extractor.get_n_best(n=10)
-    list_keyword =list()
-    for key_word in keyphrases:
-        list_keyword.append(key_word[0])
-    return list_keyword
+    except Exception as e:
+        return (e)
 
 
 def extract_entities(text): #Déclartion d'une fonction permettant de dextraire les entitér en fonction d'un text
@@ -180,5 +183,4 @@ def protocole_extract_with_Pke(text,nlp,extractor):
 
 
     return pd.Series({'keywords_text': list_of_keyword[0], 'keywords_without_ent': list_of_keyword[1],'keywords_only_VERB_ADJ_ADV_PROPN': list_of_keyword[2],'keywords_only_VERBLemma_ADJ_ADV_PROPN': list_of_keyword[3]})
-
 
