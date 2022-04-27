@@ -16,8 +16,22 @@ def extract_entities(text,nlp): #Déclaration d'une fonction permettant de d'ext
     entites = [token.text for token in doc if token.ent_type_ and not token.is_stop] # En conservant la casse !
     text_without_ent = text
     for mot in entites:
-        text_without_ent = text.replace(mot, '')
-    texte = [token.text for token in doc if (token.pos_ in ("VERB", "ADJ", "ADV", "PROPN", "NOUN") or token.is_punct or token.is_space) and not token.is_stop]
-    texteLem = [token.lemma_ for token in doc if (token.pos_ in ("VERB", "ADJ", "ADV", "PROPN", "NOUN") or token.is_punct or token.is_space) and not token.is_stop]
+        text_without_ent = text_without_ent.replace(mot, '')
 
-    return pd.Series({'texte_sans_entites': "".join(text_without_ent), 'texte': " " .join(texte), "texte_lemmatisé": " " .join(texteLem)})
+    text_without_stop_word = [token.text for token in doc if( token.pos_ or token.is_punct or token.is_space )and not token.is_stop]
+
+
+    texte_verbe_Adj_ADV_PROPN_NOUN = [token.text for token in doc if (token.pos_ in ("VERB", "ADJ", "ADV", "PROPN", "NOUN") or token.is_punct or token.is_space)]
+    texteLem_verbe_Adj_ADV_PROPN_NOUN = [token.lemma_ for token in doc if (token.pos_ in ("VERB", "ADJ", "ADV", "PROPN", "NOUN") or token.is_punct or token.is_space)]
+
+    return pd.Series({'texte_sans_entites': "".join(text_without_ent), "text_without_stop_word": " " .join(text_without_stop_word),'texte_verbe_Adj_ADV_PROPN_NOUN': " ".join(texte_verbe_Adj_ADV_PROPN_NOUN),'texteLem_verbe_Adj_ADV_PROPN_NOUN': " ".join(texteLem_verbe_Adj_ADV_PROPN_NOUN)})
+
+
+"""
+texte --> extrait mots clés # test des extracteurs sur différentes styles de texte
+texte sans entité--> extrait mots clés # test des extracteurs sur différentes styles de texte
+#texte sans mots vides --> extrait mots clés # test sur l'utilité des mots vides
+texte --> extrait mots clés --> lemmes # pertinence de la lemmatisation pour l'extraction (par ex. 
+texte1 donne (aimera, fleurs, animal)
+texte2 donne (aime, fleur, animaux)
+"""
