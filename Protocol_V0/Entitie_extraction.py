@@ -8,7 +8,7 @@ import time
 
 print(time.strftime("%H:%M:%S", time.localtime()), end=' : ')
 print('processus started')
-df = pd.read_csv("data/queneau_fr.csv")
+df = pd.read_csv("../Protocol_V1/queneau_fr.csv")
 
 
 
